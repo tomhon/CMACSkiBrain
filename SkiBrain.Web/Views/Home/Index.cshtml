@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Volunteer Status";
+}
+<div id="bodyContainer" ng-app="SpacApp" ng-cloak>
+    <div ng-controller="VolunteerStatusController as statusController">
+        <form name="myForm">
+            Last name: <input type="text" name="lastName" ng-model="statusController.lastName" ng-minlength="3" ng-maxlength="25"> {{statusController.errorMessage}}
+            <br />
+            <button ng-click="statusController.get()" ng-disabled="statusController.working">Get Status</button>
+        </form>
+        <!-- Handles a single result -->
+        <div ng-hide="!statusController.volunteerStatus || !(statusController.volunteerStatus.length == 1)">
+            <text>You have <b>completed {{statusController.volunteerStatus[0].committedDays.length}}</b> of <b>{{statusController.volunteerStatus[0].daysRequired}} required</b> days</text><br />
+            <div ng-hide="!statusController.volunteerStatus[0].daysRequiredAdjusted">
+                Note: Your total required days has been adjusted to a maximum of 8 volunteer days
+            </div>
+            <text><b>Racers:</b></text><br />
+            <div ng-repeat="racer in statusController.volunteerStatus[0].racers">
+                {{racer}}
+            </div>
+            <text><b>Completed Days:</b></text><br />
+            <div ng-repeat="day in statusController.volunteerStatus[0].committedDays">
+                {{day}}
+            </div>
+            <text><b>Pending Days:</b></text><br />
+            <div ng-repeat="day in statusController.volunteerStatus[0].pendingDays">
+                {{day}}
+            </div>
+        </div>
+        <!-- Handles multiple results -->
+        <div ng-hide="!statusController.volunteerStatus || statusController.volunteerStatus.length <= 1">
+            <br />
+            <text><b>Please select from the list below:</b></text>
+            <br /><br />
+            <div ng-repeat="volunteerRecord in statusController.volunteerStatus">
+                <form>
+                    <button ng-click="statusController.get(volunteerRecord.id)" ng-disabled="statusController.working">{{volunteerRecord.lastName}}</button>
+                    <br /><text><b>Racers:</b></text><br />
+                    <div ng-repeat="racer in volunteerRecord.racers">
+                        {{racer}}
+                    </div>
+                    <br />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/Scripts/angular.js")
+    @Scripts.Render("~/Scripts/app/volunteer-status-controller.js")
+}

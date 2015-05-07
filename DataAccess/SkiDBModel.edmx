@@ -1,0 +1,740 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SkiBrain.Data.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MembershipType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenantId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="RequiredVolunteerDays" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Parent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenantId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="Racer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenantId" Type="int" Nullable="false" />
+          <Property Name="MembershipTypeId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="DateOfBirth" Type="date" Nullable="false" />
+          <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RacerToParent">
+          <Key>
+            <PropertyRef Name="RacerId" />
+            <PropertyRef Name="ParentId" />
+          </Key>
+          <Property Name="RacerId" Type="int" Nullable="false" />
+          <Property Name="ParentId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RacerToSeason">
+          <Key>
+            <PropertyRef Name="RacerId" />
+            <PropertyRef Name="SeasonId" />
+          </Key>
+          <Property Name="RacerId" Type="int" Nullable="false" />
+          <Property Name="SeasonId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Season">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tenant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VolunteerRecord">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenantId" Type="int" Nullable="false" />
+          <Property Name="FamilyLastName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VolunteerRecordToParent">
+          <Key>
+            <PropertyRef Name="VolunteerRecordId" />
+            <PropertyRef Name="ParentId" />
+          </Key>
+          <Property Name="VolunteerRecordId" Type="int" Nullable="false" />
+          <Property Name="ParentId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VolunteerRecordToRacer">
+          <Key>
+            <PropertyRef Name="VolunteerRecordId" />
+            <PropertyRef Name="RacerId" />
+          </Key>
+          <Property Name="VolunteerRecordId" Type="int" Nullable="false" />
+          <Property Name="RacerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VolunteerStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="TenantId" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenantId" Type="int" Nullable="false" />
+          <Property Name="VolunteerRecordId" Type="int" Nullable="false" />
+          <Property Name="RequiredDayCount" Type="int" Nullable="false" />
+          <Property Name="CommittedDayCount" Type="int" Nullable="false" />
+          <Property Name="PendingDayCount" Type="int" Nullable="false" />
+          <Property Name="PendingDays" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CommittedDays" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_MembershipType_Tenant">
+          <End Role="Tenant" Type="Self.Tenant" Multiplicity="1" />
+          <End Role="MembershipType" Type="Self.MembershipType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MembershipType">
+              <PropertyRef Name="TenantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Parent_Tenant">
+          <End Role="Tenant" Type="Self.Tenant" Multiplicity="1" />
+          <End Role="Parent" Type="Self.Parent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Parent">
+              <PropertyRef Name="TenantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Racer_MembershipType">
+          <End Role="MembershipType" Type="Self.MembershipType" Multiplicity="1" />
+          <End Role="Racer" Type="Self.Racer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MembershipType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Racer">
+              <PropertyRef Name="MembershipTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Racer_Tenant">
+          <End Role="Tenant" Type="Self.Tenant" Multiplicity="1" />
+          <End Role="Racer" Type="Self.Racer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Racer">
+              <PropertyRef Name="TenantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RacerToParent_Parent">
+          <End Role="Parent" Type="Self.Parent" Multiplicity="1" />
+          <End Role="RacerToParent" Type="Self.RacerToParent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parent">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RacerToParent">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RacerToParent_Racer">
+          <End Role="Racer" Type="Self.Racer" Multiplicity="1" />
+          <End Role="RacerToParent" Type="Self.RacerToParent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Racer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RacerToParent">
+              <PropertyRef Name="RacerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RacerToSeason_Racer">
+          <End Role="Racer" Type="Self.Racer" Multiplicity="1" />
+          <End Role="RacerToSeason" Type="Self.RacerToSeason" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Racer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RacerToSeason">
+              <PropertyRef Name="RacerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RacerToSeason_Season">
+          <End Role="Season" Type="Self.Season" Multiplicity="1" />
+          <End Role="RacerToSeason" Type="Self.RacerToSeason" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Season">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RacerToSeason">
+              <PropertyRef Name="SeasonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VolunteerRecord_Tenant">
+          <End Role="Tenant" Type="Self.Tenant" Multiplicity="1" />
+          <End Role="VolunteerRecord" Type="Self.VolunteerRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VolunteerRecord">
+              <PropertyRef Name="TenantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VolunteerRecordToParent_Parent">
+          <End Role="Parent" Type="Self.Parent" Multiplicity="1" />
+          <End Role="VolunteerRecordToParent" Type="Self.VolunteerRecordToParent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parent">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VolunteerRecordToParent">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VolunteerRecordToParent_VolunteerRecord">
+          <End Role="VolunteerRecord" Type="Self.VolunteerRecord" Multiplicity="1" />
+          <End Role="VolunteerRecordToParent" Type="Self.VolunteerRecordToParent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VolunteerRecord">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VolunteerRecordToParent">
+              <PropertyRef Name="VolunteerRecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VolunteerRecordToRacer_Racer">
+          <End Role="Racer" Type="Self.Racer" Multiplicity="1" />
+          <End Role="VolunteerRecordToRacer" Type="Self.VolunteerRecordToRacer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Racer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VolunteerRecordToRacer">
+              <PropertyRef Name="RacerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VolunteerRecordToRacer_VolunteerRecord">
+          <End Role="VolunteerRecord" Type="Self.VolunteerRecord" Multiplicity="1" />
+          <End Role="VolunteerRecordToRacer" Type="Self.VolunteerRecordToRacer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VolunteerRecord">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VolunteerRecordToRacer">
+              <PropertyRef Name="VolunteerRecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VolunteerStatus_Tenant">
+          <End Role="Tenant" Type="Self.Tenant" Multiplicity="1" />
+          <End Role="VolunteerStatus" Type="Self.VolunteerStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VolunteerStatus">
+              <PropertyRef Name="TenantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VolunteerStatus_VolunteerRecord">
+          <End Role="VolunteerRecord" Type="Self.VolunteerRecord" Multiplicity="1" />
+          <End Role="VolunteerStatus" Type="Self.VolunteerStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VolunteerRecord">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VolunteerStatus">
+              <PropertyRef Name="VolunteerRecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SkiBrainDataStoreContainer">
+          <EntitySet Name="MembershipType" EntityType="Self.MembershipType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parent" EntityType="Self.Parent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Racer" EntityType="Self.Racer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RacerToParent" EntityType="Self.RacerToParent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RacerToSeason" EntityType="Self.RacerToSeason" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Season" EntityType="Self.Season" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tenant" EntityType="Self.Tenant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VolunteerRecord" EntityType="Self.VolunteerRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VolunteerRecordToParent" EntityType="Self.VolunteerRecordToParent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VolunteerRecordToRacer" EntityType="Self.VolunteerRecordToRacer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VolunteerStatus" EntityType="Self.VolunteerStatus" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_MembershipType_Tenant" Association="Self.FK_MembershipType_Tenant">
+            <End Role="Tenant" EntitySet="Tenant" />
+            <End Role="MembershipType" EntitySet="MembershipType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Parent_Tenant" Association="Self.FK_Parent_Tenant">
+            <End Role="Tenant" EntitySet="Tenant" />
+            <End Role="Parent" EntitySet="Parent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Racer_MembershipType" Association="Self.FK_Racer_MembershipType">
+            <End Role="MembershipType" EntitySet="MembershipType" />
+            <End Role="Racer" EntitySet="Racer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Racer_Tenant" Association="Self.FK_Racer_Tenant">
+            <End Role="Tenant" EntitySet="Tenant" />
+            <End Role="Racer" EntitySet="Racer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RacerToParent_Parent" Association="Self.FK_RacerToParent_Parent">
+            <End Role="Parent" EntitySet="Parent" />
+            <End Role="RacerToParent" EntitySet="RacerToParent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RacerToParent_Racer" Association="Self.FK_RacerToParent_Racer">
+            <End Role="Racer" EntitySet="Racer" />
+            <End Role="RacerToParent" EntitySet="RacerToParent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RacerToSeason_Racer" Association="Self.FK_RacerToSeason_Racer">
+            <End Role="Racer" EntitySet="Racer" />
+            <End Role="RacerToSeason" EntitySet="RacerToSeason" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RacerToSeason_Season" Association="Self.FK_RacerToSeason_Season">
+            <End Role="Season" EntitySet="Season" />
+            <End Role="RacerToSeason" EntitySet="RacerToSeason" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VolunteerRecord_Tenant" Association="Self.FK_VolunteerRecord_Tenant">
+            <End Role="Tenant" EntitySet="Tenant" />
+            <End Role="VolunteerRecord" EntitySet="VolunteerRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VolunteerRecordToParent_Parent" Association="Self.FK_VolunteerRecordToParent_Parent">
+            <End Role="Parent" EntitySet="Parent" />
+            <End Role="VolunteerRecordToParent" EntitySet="VolunteerRecordToParent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VolunteerRecordToParent_VolunteerRecord" Association="Self.FK_VolunteerRecordToParent_VolunteerRecord">
+            <End Role="VolunteerRecord" EntitySet="VolunteerRecord" />
+            <End Role="VolunteerRecordToParent" EntitySet="VolunteerRecordToParent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VolunteerRecordToRacer_Racer" Association="Self.FK_VolunteerRecordToRacer_Racer">
+            <End Role="Racer" EntitySet="Racer" />
+            <End Role="VolunteerRecordToRacer" EntitySet="VolunteerRecordToRacer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VolunteerRecordToRacer_VolunteerRecord" Association="Self.FK_VolunteerRecordToRacer_VolunteerRecord">
+            <End Role="VolunteerRecord" EntitySet="VolunteerRecord" />
+            <End Role="VolunteerRecordToRacer" EntitySet="VolunteerRecordToRacer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VolunteerStatus_Tenant" Association="Self.FK_VolunteerStatus_Tenant">
+            <End Role="Tenant" EntitySet="Tenant" />
+            <End Role="VolunteerStatus" EntitySet="VolunteerStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VolunteerStatus_VolunteerRecord" Association="Self.FK_VolunteerStatus_VolunteerRecord">
+            <End Role="VolunteerRecord" EntitySet="VolunteerRecord" />
+            <End Role="VolunteerStatus" EntitySet="VolunteerStatus" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SkiBrain.Data" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Racer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenantId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Tenant" Relationship="Self.FK_Racer_Tenant" FromRole="Racer" ToRole="Tenant" />
+          <NavigationProperty Name="Seasons" Relationship="Self.RacerToSeason" FromRole="Racer" ToRole="Season" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Parents" Relationship="SkiBrain.Data.RacerToParent" FromRole="Racer" ToRole="Parent" />
+          <Property Name="MembershipTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MembershipType" Relationship="SkiBrain.Data.FK_Racer_MembershipType" FromRole="Racer" ToRole="MembershipType" />
+          <NavigationProperty Name="VolunteerRecords" Relationship="SkiBrain.Data.VolunteerRecordToRacer" FromRole="Racer" ToRole="VolunteerRecord" />
+        </EntityType>
+        <EntityType Name="Season">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Racers" Relationship="Self.RacerToSeason" FromRole="Season" ToRole="Racer" />
+        </EntityType>
+        <EntityType Name="Tenant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Racers" Relationship="Self.FK_Racer_Tenant" FromRole="Tenant" ToRole="Racer" />
+          <NavigationProperty Name="Parents" Relationship="SkiBrain.Data.FK_Parent_Tenant" FromRole="Tenant" ToRole="Parent" />
+          <NavigationProperty Name="MembershipTypes" Relationship="SkiBrain.Data.FK_MembershipType_Tenant" FromRole="Tenant" ToRole="MembershipType" />
+          <NavigationProperty Name="VolunteerRecords" Relationship="SkiBrain.Data.FK_VolunteerRecord_Tenant" FromRole="Tenant" ToRole="VolunteerRecord" />
+          <NavigationProperty Name="VolunteerStatus" Relationship="SkiBrain.Data.FK_VolunteerStatus_Tenant" FromRole="Tenant" ToRole="VolunteerStatus" />
+          </EntityType>
+        <Association Name="FK_Racer_Tenant">
+          <End Role="Tenant" Type="Self.Tenant" Multiplicity="1" />
+          <End Role="Racer" Type="Self.Racer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Racer">
+              <PropertyRef Name="TenantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RacerToSeason">
+          <End Role="Racer" Type="Self.Racer" Multiplicity="*" />
+          <End Role="Season" Type="Self.Season" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="SkiDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Racers" EntityType="Self.Racer" />
+          <EntitySet Name="Seasons" EntityType="Self.Season" />
+          <EntitySet Name="Tenants" EntityType="Self.Tenant" />
+          <AssociationSet Name="FK_Racer_Tenant" Association="Self.FK_Racer_Tenant">
+            <End Role="Tenant" EntitySet="Tenants" />
+            <End Role="Racer" EntitySet="Racers" />
+          </AssociationSet>
+          <AssociationSet Name="RacerToSeason" Association="Self.RacerToSeason">
+            <End Role="Racer" EntitySet="Racers" />
+            <End Role="Season" EntitySet="Seasons" />
+          </AssociationSet>
+          <EntitySet Name="Parents" EntityType="SkiBrain.Data.Parent" />
+          <AssociationSet Name="FK_Parent_Tenant" Association="SkiBrain.Data.FK_Parent_Tenant">
+            <End Role="Tenant" EntitySet="Tenants" />
+            <End Role="Parent" EntitySet="Parents" />
+          </AssociationSet>
+          <AssociationSet Name="RacerToParent" Association="SkiBrain.Data.RacerToParent">
+            <End Role="Parent" EntitySet="Parents" />
+            <End Role="Racer" EntitySet="Racers" />
+          </AssociationSet>
+          <EntitySet Name="MembershipTypes" EntityType="SkiBrain.Data.MembershipType" />
+          <AssociationSet Name="FK_MembershipType_Tenant" Association="SkiBrain.Data.FK_MembershipType_Tenant">
+            <End Role="Tenant" EntitySet="Tenants" />
+            <End Role="MembershipType" EntitySet="MembershipTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Racer_MembershipType" Association="SkiBrain.Data.FK_Racer_MembershipType">
+            <End Role="MembershipType" EntitySet="MembershipTypes" />
+            <End Role="Racer" EntitySet="Racers" />
+          </AssociationSet>
+          <EntitySet Name="VolunteerRecords" EntityType="SkiBrain.Data.VolunteerRecord" />
+          <AssociationSet Name="FK_VolunteerRecord_Tenant" Association="SkiBrain.Data.FK_VolunteerRecord_Tenant">
+            <End Role="Tenant" EntitySet="Tenants" />
+            <End Role="VolunteerRecord" EntitySet="VolunteerRecords" />
+          </AssociationSet>
+          <AssociationSet Name="VolunteerRecordToParent" Association="SkiBrain.Data.VolunteerRecordToParent">
+            <End Role="Parent" EntitySet="Parents" />
+            <End Role="VolunteerRecord" EntitySet="VolunteerRecords" />
+          </AssociationSet>
+          <AssociationSet Name="VolunteerRecordToRacer" Association="SkiBrain.Data.VolunteerRecordToRacer">
+            <End Role="Racer" EntitySet="Racers" />
+            <End Role="VolunteerRecord" EntitySet="VolunteerRecords" />
+          </AssociationSet>
+          <EntitySet Name="VolunteerStatuses" EntityType="SkiBrain.Data.VolunteerStatus" />
+          <AssociationSet Name="FK_VolunteerStatus_VolunteerRecord" Association="SkiBrain.Data.FK_VolunteerStatus_VolunteerRecord">
+            <End Role="VolunteerRecord" EntitySet="VolunteerRecords" />
+            <End Role="VolunteerStatu" EntitySet="VolunteerStatuses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VolunteerStatus_Tenant" Association="SkiBrain.Data.FK_VolunteerStatus_Tenant">
+            <End Role="Tenant" EntitySet="Tenants" />
+            <End Role="VolunteerStatus" EntitySet="VolunteerStatuses" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Parent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenantId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tenant" Relationship="SkiBrain.Data.FK_Parent_Tenant" FromRole="Parent" ToRole="Tenant" />
+          <NavigationProperty Name="Racers" Relationship="SkiBrain.Data.RacerToParent" FromRole="Parent" ToRole="Racer" />
+          <NavigationProperty Name="VolunteerRecords" Relationship="SkiBrain.Data.VolunteerRecordToParent" FromRole="Parent" ToRole="VolunteerRecord" />
+        </EntityType>
+        <Association Name="FK_Parent_Tenant">
+          <End Type="SkiBrain.Data.Tenant" Role="Tenant" Multiplicity="1" />
+          <End Type="SkiBrain.Data.Parent" Role="Parent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Parent">
+              <PropertyRef Name="TenantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RacerToParent">
+          <End Type="SkiBrain.Data.Parent" Role="Parent" Multiplicity="*" />
+          <End Type="SkiBrain.Data.Racer" Role="Racer" Multiplicity="*" />
+        </Association>
+        <EntityType Name="MembershipType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenantId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="RequiredVolunteerDays" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tenant" Relationship="SkiBrain.Data.FK_MembershipType_Tenant" FromRole="MembershipType" ToRole="Tenant" />
+          <NavigationProperty Name="Racers" Relationship="SkiBrain.Data.FK_Racer_MembershipType" FromRole="MembershipType" ToRole="Racer" />
+        </EntityType>
+        <Association Name="FK_MembershipType_Tenant">
+          <End Type="SkiBrain.Data.Tenant" Role="Tenant" Multiplicity="1" />
+          <End Type="SkiBrain.Data.MembershipType" Role="MembershipType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MembershipType">
+              <PropertyRef Name="TenantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Racer_MembershipType">
+          <End Type="SkiBrain.Data.MembershipType" Role="MembershipType" Multiplicity="1" />
+          <End Type="SkiBrain.Data.Racer" Role="Racer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MembershipType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Racer">
+              <PropertyRef Name="MembershipTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="VolunteerRecord">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenantId" Type="Int32" Nullable="false" />
+          <Property Name="FamilyLastName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tenant" Relationship="SkiBrain.Data.FK_VolunteerRecord_Tenant" FromRole="VolunteerRecord" ToRole="Tenant" />
+          <NavigationProperty Name="Parents" Relationship="SkiBrain.Data.VolunteerRecordToParent" FromRole="VolunteerRecord" ToRole="Parent" />
+          <NavigationProperty Name="Racers" Relationship="SkiBrain.Data.VolunteerRecordToRacer" FromRole="VolunteerRecord" ToRole="Racer" />
+          <NavigationProperty Name="VolunteerStatus" Relationship="SkiBrain.Data.FK_VolunteerStatus_VolunteerRecord" FromRole="VolunteerRecord" ToRole="VolunteerStatu" />
+        </EntityType>
+        <Association Name="FK_VolunteerRecord_Tenant">
+          <End Type="SkiBrain.Data.Tenant" Role="Tenant" Multiplicity="1" />
+          <End Type="SkiBrain.Data.VolunteerRecord" Role="VolunteerRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VolunteerRecord">
+              <PropertyRef Name="TenantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VolunteerRecordToParent">
+          <End Type="SkiBrain.Data.Parent" Role="Parent" Multiplicity="*" />
+          <End Type="SkiBrain.Data.VolunteerRecord" Role="VolunteerRecord" Multiplicity="*" />
+        </Association>
+        <Association Name="VolunteerRecordToRacer">
+          <End Type="SkiBrain.Data.Racer" Role="Racer" Multiplicity="*" />
+          <End Type="SkiBrain.Data.VolunteerRecord" Role="VolunteerRecord" Multiplicity="*" />
+        </Association>
+        <EntityType Name="VolunteerStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="TenantId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="VolunteerRecordId" Type="Int32" Nullable="false" />
+          <Property Name="RequiredDayCount" Type="Int32" Nullable="false" />
+          <Property Name="CommittedDayCount" Type="Int32" Nullable="false" />
+          <Property Name="PendingDayCount" Type="Int32" Nullable="false" />
+          <Property Name="PendingDays" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CommittedDays" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="VolunteerRecord" Relationship="SkiBrain.Data.FK_VolunteerStatus_VolunteerRecord" FromRole="VolunteerStatu" ToRole="VolunteerRecord" />
+          <Property Name="TenantId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tenant" Relationship="SkiBrain.Data.FK_VolunteerStatus_Tenant" FromRole="VolunteerStatus" ToRole="Tenant" />
+        </EntityType>
+        <Association Name="FK_VolunteerStatus_VolunteerRecord">
+          <End Type="SkiBrain.Data.VolunteerRecord" Role="VolunteerRecord" Multiplicity="1" />
+          <End Type="SkiBrain.Data.VolunteerStatus" Role="VolunteerStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VolunteerRecord">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VolunteerStatu">
+              <PropertyRef Name="VolunteerRecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VolunteerStatus_Tenant">
+          <End Type="SkiBrain.Data.Tenant" Role="Tenant" Multiplicity="1" />
+          <End Type="SkiBrain.Data.VolunteerStatus" Role="VolunteerStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VolunteerStatus">
+              <PropertyRef Name="TenantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SkiBrainDataStoreContainer" CdmEntityContainer="SkiDBEntities">
+          <EntitySetMapping Name="Racers">
+            <EntityTypeMapping TypeName="SkiBrain.Data.Racer">
+              <MappingFragment StoreEntitySet="Racer">
+                <ScalarProperty Name="MembershipTypeId" ColumnName="MembershipTypeId" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TenantId" ColumnName="TenantId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seasons">
+            <EntityTypeMapping TypeName="SkiBrain.Data.Season">
+              <MappingFragment StoreEntitySet="Season">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tenants">
+            <EntityTypeMapping TypeName="SkiBrain.Data.Tenant">
+              <MappingFragment StoreEntitySet="Tenant">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="RacerToSeason" TypeName="SkiBrain.Data.RacerToSeason" StoreEntitySet="RacerToSeason">
+            <EndProperty Name="Racer">
+              <ScalarProperty Name="Id" ColumnName="RacerId" />
+            </EndProperty>
+            <EndProperty Name="Season">
+              <ScalarProperty Name="Id" ColumnName="SeasonId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Parents">
+            <EntityTypeMapping TypeName="SkiBrain.Data.Parent">
+              <MappingFragment StoreEntitySet="Parent">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="TenantId" ColumnName="TenantId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="RacerToParent" TypeName="SkiBrain.Data.RacerToParent" StoreEntitySet="RacerToParent">
+            <EndProperty Name="Racer">
+              <ScalarProperty Name="Id" ColumnName="RacerId" />
+            </EndProperty>
+            <EndProperty Name="Parent">
+              <ScalarProperty Name="Id" ColumnName="ParentId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="MembershipTypes">
+            <EntityTypeMapping TypeName="SkiBrain.Data.MembershipType">
+              <MappingFragment StoreEntitySet="MembershipType">
+                <ScalarProperty Name="RequiredVolunteerDays" ColumnName="RequiredVolunteerDays" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TenantId" ColumnName="TenantId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VolunteerRecords">
+            <EntityTypeMapping TypeName="SkiBrain.Data.VolunteerRecord">
+              <MappingFragment StoreEntitySet="VolunteerRecord">
+                <ScalarProperty Name="FamilyLastName" ColumnName="FamilyLastName" />
+                <ScalarProperty Name="TenantId" ColumnName="TenantId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="VolunteerRecordToParent" TypeName="SkiBrain.Data.VolunteerRecordToParent" StoreEntitySet="VolunteerRecordToParent">
+            <EndProperty Name="VolunteerRecord">
+              <ScalarProperty Name="Id" ColumnName="VolunteerRecordId" />
+            </EndProperty>
+            <EndProperty Name="Parent">
+              <ScalarProperty Name="Id" ColumnName="ParentId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="VolunteerRecordToRacer" TypeName="SkiBrain.Data.VolunteerRecordToRacer" StoreEntitySet="VolunteerRecordToRacer">
+            <EndProperty Name="VolunteerRecord">
+              <ScalarProperty Name="Id" ColumnName="VolunteerRecordId" />
+            </EndProperty>
+            <EndProperty Name="Racer">
+              <ScalarProperty Name="Id" ColumnName="RacerId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="VolunteerStatuses">
+            <EntityTypeMapping TypeName="SkiBrain.Data.VolunteerStatus">
+              <MappingFragment StoreEntitySet="VolunteerStatus">
+                <ScalarProperty Name="TenantId" ColumnName="TenantId" />
+                <ScalarProperty Name="CommittedDays" ColumnName="CommittedDays" />
+                <ScalarProperty Name="PendingDays" ColumnName="PendingDays" />
+                <ScalarProperty Name="PendingDayCount" ColumnName="PendingDayCount" />
+                <ScalarProperty Name="CommittedDayCount" ColumnName="CommittedDayCount" />
+                <ScalarProperty Name="RequiredDayCount" ColumnName="RequiredDayCount" />
+                <ScalarProperty Name="VolunteerRecordId" ColumnName="VolunteerRecordId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
