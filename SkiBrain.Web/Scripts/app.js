@@ -1,3 +1,6 @@
+/* Disclaimer : UX based on SB Admin V2.0 template found here: https://github.com/start-angular/sb-admin-angular. Significant modifications have been made throughout as this template was simply used as a basis.
+*/
+
 'use strict';
 /**
  * @ngdoc overview

@@ -692,6 +692,7 @@
     <Content Include="bower_components\oclazyload\examples\complexExample\README.md" />
     <Content Include="bower_components\oclazyload\LICENSE.md" />
     <Content Include="bower_components\oclazyload\README.md" />
+    <Content Include="LICENSE" />
     <None Include="Properties\PublishProfiles\Azure.pubxml" />
     <Content Include="scripts\_references.js" />
     <Content Include="Web.config" />
