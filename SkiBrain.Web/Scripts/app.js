@@ -16,6 +16,7 @@ angular
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
+    'mgcrea.ngStrap'
   ])
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
     
@@ -96,6 +97,20 @@ angular
           }
         }
       })
+      .state('dashboard.races', {
+              templateUrl: 'js/views/races/races.html',
+              url: '/races',
+              resolve: {
+                  loadMyFiles: function ($ocLazyLoad) {
+                      return $ocLazyLoad.load({
+                          name: 'spacAdminApp',
+                          files: [
+                          'scripts/directives/races/racelist.js'
+                          ]
+                      })
+                  }
+              }
+          })
       .state('dashboard.form',{
           templateUrl: 'js/views/form.html',
         url:'/form'
