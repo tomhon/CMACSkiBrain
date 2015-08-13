@@ -32,5 +32,6 @@ namespace SkiBrain.DataAccess
         public virtual DbSet<MembershipType> MembershipTypes { get; set; }
         public virtual DbSet<VolunteerRecord> VolunteerRecords { get; set; }
         public virtual DbSet<VolunteerStatus> VolunteerStatuses { get; set; }
+        public virtual DbSet<Race> Races { get; set; }
     }
 }

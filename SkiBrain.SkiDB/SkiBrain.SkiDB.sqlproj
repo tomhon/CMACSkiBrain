@@ -82,5 +82,6 @@
     <Build Include="Views\U18.sql" />
     <Build Include="Views\U21.sql" />
     <Build Include="Views\OverallVolunteerStatus.sql" />
+    <Build Include="Tables\Race.sql" />
   </ItemGroup>
 </Project>

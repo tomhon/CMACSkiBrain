@@ -24,6 +24,13 @@
           <Property Name="LastName" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
         </EntityType>
+        <EntityType Name="Race">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
         <EntityType Name="Racer">
           <Key>
             <PropertyRef Name="Id" />
@@ -287,6 +294,7 @@
         <EntityContainer Name="SkiBrainDataStoreContainer">
           <EntitySet Name="MembershipType" EntityType="Self.MembershipType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Parent" EntityType="Self.Parent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Race" EntityType="Self.Race" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Racer" EntityType="Self.Racer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RacerToParent" EntityType="Self.RacerToParent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RacerToSeason" EntityType="Self.RacerToSeason" Schema="dbo" store:Type="Tables" />
@@ -466,6 +474,7 @@
             <End Role="Tenant" EntitySet="Tenants" />
             <End Role="VolunteerStatus" EntitySet="VolunteerStatuses" />
           </AssociationSet>
+          <EntitySet Name="Races" EntityType="SkiBrain.Data.Race" />
           </EntityContainer>
         <EntityType Name="Parent">
           <Key>
@@ -603,6 +612,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Race">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -710,6 +726,14 @@
                 <ScalarProperty Name="CommittedDayCount" ColumnName="CommittedDayCount" />
                 <ScalarProperty Name="RequiredDayCount" ColumnName="RequiredDayCount" />
                 <ScalarProperty Name="VolunteerRecordId" ColumnName="VolunteerRecordId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Races">
+            <EntityTypeMapping TypeName="SkiBrain.Data.Race">
+              <MappingFragment StoreEntitySet="Race">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

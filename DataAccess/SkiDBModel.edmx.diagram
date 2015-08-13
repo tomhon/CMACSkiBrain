@@ -23,6 +23,7 @@
         <EntityTypeShape EntityType="SkiBrain.Data.VolunteerStatus" Width="1.5" PointX="7.5" PointY="4.125" />
         <AssociationConnector Association="SkiBrain.Data.FK_VolunteerStatus_VolunteerRecord" />
         <AssociationConnector Association="SkiBrain.Data.FK_VolunteerStatus_Tenant" />
+        <EntityTypeShape EntityType="SkiBrain.Data.Race" Width="1.5" PointX="7.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

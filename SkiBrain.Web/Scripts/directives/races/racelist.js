@@ -8,8 +8,18 @@ angular.module('spacAdminApp')
       replace: true,
       scope: {
       },
-      controller:function($scope){
-        $scope.raceName = 'First Race';
+      controller: function ($scope, $http) {
+
+          $scope.LoadRaces = function() {
+              $http.get('/api/Races/', $scope.data).success(function (data, status, headers, config) {
+                  $scope.races = data;
+              }).error(function (data, status, headers, config) {
+                  $scope.errorMessage = "Oops... something went wrong";
+              });
+          }
+
+          $scope.LoadRaces();
+
       }
     }
   });
