@@ -121,7 +121,19 @@ angular
     })
       .state('login',{
           templateUrl: 'js/views/pages/login.html',
-        url:'/login'
+          url: '/login',
+          controller: 'loginController',
+          resolve: {
+              loadMyFiles:function($ocLazyLoad) {
+                  return $ocLazyLoad.load({
+                      name:'spacAdminApp',
+                      files:[
+                      'scripts/controllers/loginController.js'
+                      ]
+                  })
+              }
+          }
+      })
     })
       .state('dashboard.chart',{
           templateUrl: 'js/views/chart.html',
