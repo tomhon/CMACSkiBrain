@@ -18,11 +18,13 @@ namespace SkiBrain.Web.Controllers
         private SkiDBEntities db = new SkiDBEntities();
 
         // GET: api/Races
+        [Authorize]
         public IQueryable<Race> GetRaces()
         {
             return db.Races;
         }
 
+        [Authorize]
         [ResponseType(typeof(Race))]
         public async Task<IHttpActionResult> GetRace(int id)
         {
@@ -36,6 +38,7 @@ namespace SkiBrain.Web.Controllers
         }
 
         // PUT: api/Races/5
+        [Authorize]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutRace(int id, Race race)
         {
@@ -71,6 +74,7 @@ namespace SkiBrain.Web.Controllers
         }
 
         // POST: api/Races
+        [Authorize]
         [ResponseType(typeof(Race))]
         public async Task<IHttpActionResult> PostRace(Race race)
         {
@@ -86,6 +90,7 @@ namespace SkiBrain.Web.Controllers
         }
 
         // DELETE: api/Races/5
+        [Authorize]
         [ResponseType(typeof(Race))]
         public async Task<IHttpActionResult> DeleteRace(int id)
         {

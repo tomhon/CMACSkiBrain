@@ -38,6 +38,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -50,6 +56,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthContext.cs" />
+    <Compile Include="AuthRepository.cs" />
     <Compile Include="MembershipType.cs">
       <DependentUpon>SkiDBModel.tt</DependentUpon>
     </Compile>
@@ -85,6 +93,7 @@
     <Compile Include="Tenant.cs">
       <DependentUpon>SkiDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserModel.cs" />
     <Compile Include="VolunteerRecord.cs">
       <DependentUpon>SkiDBModel.tt</DependentUpon>
     </Compile>

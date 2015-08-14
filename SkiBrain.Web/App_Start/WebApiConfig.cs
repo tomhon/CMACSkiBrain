@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Http;
 
 using Newtonsoft.Json.Serialization;
+using System.Net.Http.Formatting;
 
 namespace SkiBrain.Web
 {
@@ -11,11 +12,6 @@ namespace SkiBrain.Web
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
-
-            // Use camel case for JSON data.
-            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
             // Web API routes
             config.MapHttpAttributeRoutes();
 
@@ -24,6 +20,9 @@ namespace SkiBrain.Web
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
+            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }
