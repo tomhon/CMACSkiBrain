@@ -16,21 +16,23 @@ angular
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
-    'mgcrea.ngStrap'
+    'LocalStorageModule'
   ])
-  .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
+  .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $httpProvider) {
     
     $ocLazyLoadProvider.config({
       debug:false,
       events:true,
     });
 
+    $httpProvider.interceptors.push('authInterceptorService');
+
     $urlRouterProvider.otherwise('/dashboard/home');
 
     $stateProvider
       .state('dashboard', {
         url:'/dashboard',
-        templateUrl: 'js/views/dashboard/main.html',
+        templateUrl: 'scripts/views/dashboard/main.html',
         resolve: {
             loadMyDirectives:function($ocLazyLoad){
                 return $ocLazyLoad.load(
@@ -38,7 +40,7 @@ angular
                     name:'spacAdminApp',
                     files:[
                     'scripts/directives/header/header.js',
-                    'scripts/directives/header/header-notification/header-notification.js',
+                    'scripts/directives/header/header-menu/header-menu.js',
                     'scripts/directives/sidebar/sidebar.js',
                     'scripts/directives/sidebar/sidebar-search/sidebar-search.js'
                     ]
@@ -81,7 +83,7 @@ angular
       .state('dashboard.home',{
         url:'/home',
         controller: 'MainCtrl',
-        templateUrl: 'js/views/dashboard/home.html',
+        templateUrl: 'scripts/views/dashboard/home.html',
         resolve: {
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -98,7 +100,7 @@ angular
         }
       })
       .state('dashboard.races', {
-              templateUrl: 'js/views/races/races.html',
+              templateUrl: 'scripts/views/races/races.html',
               url: '/races',
               resolve: {
                   loadMyFiles: function ($ocLazyLoad) {
@@ -112,31 +114,15 @@ angular
               }
           })
       .state('dashboard.form',{
-          templateUrl: 'js/views/form.html',
+          templateUrl: 'scripts/views/form.html',
         url:'/form'
     })
       .state('dashboard.blank',{
-          templateUrl: 'js/views/pages/blank.html',
+          templateUrl: 'scripts/views/pages/blank.html',
         url:'/blank'
     })
-      .state('login',{
-          templateUrl: 'js/views/pages/login.html',
-          url: '/login',
-          controller: 'loginController',
-          resolve: {
-              loadMyFiles:function($ocLazyLoad) {
-                  return $ocLazyLoad.load({
-                      name:'spacAdminApp',
-                      files:[
-                      'scripts/controllers/loginController.js'
-                      ]
-                  })
-              }
-          }
-      })
-    })
       .state('dashboard.chart',{
-          templateUrl: 'js/views/chart.html',
+          templateUrl: 'scripts/views/chart.html',
         url:'/chart',
         controller:'ChartCtrl',
         resolve: {
@@ -156,33 +142,34 @@ angular
         }
     })
       .state('dashboard.table',{
-          templateUrl: 'js/views/table.html',
+          templateUrl: 'scripts/views/table.html',
         url:'/table'
     })
       .state('dashboard.panels-wells',{
-          templateUrl: 'js/views/ui-elements/panels-wells.html',
+          templateUrl: 'scripts/views/ui-elements/panels-wells.html',
           url:'/panels-wells'
       })
       .state('dashboard.buttons',{
-          templateUrl: 'js/views/ui-elements/buttons.html',
+          templateUrl: 'scripts/views/ui-elements/buttons.html',
         url:'/buttons'
     })
       .state('dashboard.notifications',{
-          templateUrl: 'js/views/ui-elements/notifications.html',
+          templateUrl: 'scripts/views/ui-elements/notifications.html',
         url:'/notifications'
     })
       .state('dashboard.typography',{
-          templateUrl: 'js/views/ui-elements/typography.html',
+          templateUrl: 'scripts/views/ui-elements/typography.html',
        url:'/typography'
    })
       .state('dashboard.icons',{
-          templateUrl: 'js/views/ui-elements/icons.html',
+          templateUrl: 'scripts/views/ui-elements/icons.html',
        url:'/icons'
    })
       .state('dashboard.grid',{
-          templateUrl: 'js/views/ui-elements/grid.html',
+          templateUrl: 'scripts/views/ui-elements/grid.html',
        url:'/grid'
    })
+  }])
+.run(['authService', function (authService) {
+      authService.fillAuthData();
   }]);
-
-    

@@ -1,25 +1,29 @@
 'use strict';
 
 angular.module('spacAdminApp')
-    .controller('loginController', ['$scope', '$location', 'authService', function ($scope, $location, authService) {
+    .controller('loginController', function ($scope, $location, $modalInstance, authService) {
 
-    $scope.loginData = {
-        userName: "",
-        password: ""
-    };
+        $scope.loginData = {
+            userName: "",
+            password: ""
+        };
 
-    $scope.message = "";
+        $scope.message = "";
 
-    $scope.login = function () {
+        $scope.login = function () {
 
-        authService.login($scope.loginData).then(function (response) {
+            authService.login($scope.loginData).then(function (response) {
 
-            $location.path('/');
+                $modalInstance.close();
 
-        },
-         function (err) {
-             $scope.message = err.error_description;
-         });
-    };
+            },
+             function (err) {
+                 $scope.message = err.error_description;
+             });
+        };
 
-}]);
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+
+    });

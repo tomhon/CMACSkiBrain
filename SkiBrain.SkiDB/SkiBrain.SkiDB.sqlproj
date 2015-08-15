@@ -87,4 +87,7 @@
   <ItemGroup>
     <RefactorLog Include="SkiBrain.SkiDB.refactorlog" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="SkiBrain.SkiDB.publish.xml" />
+  </ItemGroup>
 </Project>
