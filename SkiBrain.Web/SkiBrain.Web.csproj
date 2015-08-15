@@ -691,7 +691,6 @@
     <Content Include="bower_components\oclazyload\examples\complexExample\README.md" />
     <Content Include="bower_components\oclazyload\LICENSE.md" />
     <Content Include="bower_components\oclazyload\README.md" />
-    <Content Include="LICENSE" />
     <Content Include="bower_components\angular-local-storage\.bower.json" />
     <Content Include="bower_components\angular-local-storage\.bowerrc" />
     <Content Include="bower_components\angular-local-storage\.gitattributes" />
