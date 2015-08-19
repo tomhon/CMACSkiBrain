@@ -16,7 +16,8 @@ angular
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
-    'LocalStorageModule'
+    'LocalStorageModule',
+    'smart-table'
   ])
   .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $httpProvider) {
     
@@ -100,7 +101,7 @@ angular
         }
       })
       .state('dashboard.races', {
-              templateUrl: 'scripts/views/races/races.html',
+              templateUrl: 'scripts/views/races.html',
               url: '/races',
               resolve: {
                   loadMyFiles: function ($ocLazyLoad) {
@@ -108,6 +109,20 @@ angular
                           name: 'spacAdminApp',
                           files: [
                           'scripts/directives/races/racelist.js'
+                          ]
+                      })
+                  }
+              }
+      })
+          .state('dashboard.volunteer', {
+              templateUrl: 'scripts/views/volunteer.html',
+              url: '/volunteer',
+              resolve: {
+                  loadMyFiles: function ($ocLazyLoad) {
+                      return $ocLazyLoad.load({
+                          name: 'spacAdminApp',
+                          files: [
+                          'scripts/directives/volunteer-list/volunteer-list.js'
                           ]
                       })
                   }

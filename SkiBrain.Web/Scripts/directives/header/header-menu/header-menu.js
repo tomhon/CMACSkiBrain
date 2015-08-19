@@ -14,6 +14,10 @@ angular.module('spacAdminApp')
                     return authService.authentication.isAuth;
                 }
 
+                $scope.userName = function () {
+                    return authService.authentication.userName;
+                }
+
                 $scope.logOut = function () {
                     authService.logOut();
                 }

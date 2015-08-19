@@ -1,0 +1,22 @@
+<div>
+    <div class="panel-body">
+        <table st-table="displayedPositions" st-safe-src="positions" class="table">
+            <thead>
+                <tr>
+                    <th st-sort-default="true" st-skip-natural="true" st-sort="date">Date</th>
+                    <th st-skip-natural="true" st-sort="race">Race</th>
+                    <th st-skip-natural="true" st-sort="position">Position</th>
+                    <th st-skip-natural="true" st-sort="available">Available</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="pos in displayedPositions">
+                    <td>{{pos.date | date}}</td>
+                    <td>{{pos.race}}</td>
+                    <td>{{pos.position}}</td>
+                    <td>{{pos.available}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
