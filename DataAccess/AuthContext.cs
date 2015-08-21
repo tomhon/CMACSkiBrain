@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity;
+using SkiBrain.DataAccess.Entities;
 
 namespace SkiBrain.DataAccess
 {
@@ -15,5 +17,9 @@ namespace SkiBrain.DataAccess
         {
  
         }
+        
+        public DbSet<Client> Clients { get; set; }
+        
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
     }
 }

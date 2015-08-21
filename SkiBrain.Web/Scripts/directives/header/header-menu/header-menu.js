@@ -15,7 +15,13 @@ angular.module('spacAdminApp')
                 }
 
                 $scope.userName = function () {
-                    return authService.authentication.userName;
+                    if ($scope.authorized()) {
+                        return authService.authentication.userName;
+                    }
+                    else {
+                        return 'Not Logged In';
+                    }
+                       
                 }
 
                 $scope.logOut = function () {

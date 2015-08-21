@@ -1,6 +1,6 @@
 ﻿'use strict';
 angular.module('spacAdminApp')
-    .factory('authInterceptorService', ['$q', '$location', 'localStorageService', function ($q, $location, localStorageService) {
+    .factory('authInterceptorService', ['$q', '$injector', '$location', 'localStorageService', function ($q, $injector, $location, localStorageService) {
 
     var authInterceptorServiceFactory = {};
 
@@ -17,10 +17,28 @@ angular.module('spacAdminApp')
     }
 
     var _responseError = function (rejection) {
+        var deferred = $q.defer();
         if (rejection.status === 401) {
-            //$location.path('/login');
+            var authService = $injector.get('authService');
+            authService.refreshToken().then(function (response) {
+                _retryHttpRequest(rejection.config, deferred);
+            }, function () {
+                authService.logOut();
+                deferred.reject(rejection);
+            });
+        } else {
+            deferred.reject(rejection);
         }
-        return $q.reject(rejection);
+        return deferred.promise;
+    }
+
+    var _retryHttpRequest = function (config, deferred) {
+        $http = $injector.get('$http');
+        $http(config).then(function (response) {
+            deferred.resolve(response);
+        }, function (response) {
+            deferred.reject(response);
+        });
     }
 
     authInterceptorServiceFactory.request = _request;

@@ -73,6 +73,8 @@
   <ItemGroup>
     <Compile Include="AuthContext.cs" />
     <Compile Include="AuthRepository.cs" />
+    <Compile Include="Entities\Client.cs" />
+    <Compile Include="Entities\RefreshToken.cs" />
     <Compile Include="MembershipType.cs">
       <DependentUpon>SkiDBModel.tt</DependentUpon>
     </Compile>
@@ -108,7 +110,7 @@
     <Compile Include="Tenant.cs">
       <DependentUpon>SkiDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="VolunteerRecord.cs">
       <DependentUpon>SkiDBModel.tt</DependentUpon>
     </Compile>

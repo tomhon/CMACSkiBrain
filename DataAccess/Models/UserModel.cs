@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SkiBrain.DataAccess
+namespace SkiBrain.DataAccess.Models
 {
     public class UserModel
     {

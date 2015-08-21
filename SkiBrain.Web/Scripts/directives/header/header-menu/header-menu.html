@@ -2,24 +2,24 @@
     <!-- /.dropdown -->
     <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-user fa-fw"></i> <b>{{userName()}}</b> <i class="fa fa-caret-down"></i>
+            <b>{{userName()}}</b> <i class="fa fa-caret-down"></i>
         </a>
         <ul ng-hide="!authorized()" class="dropdown-menu dropdown-user">
             <li>
-                <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                <i class="fa fa-user fa-fw"></i> User Profile
             </li>
             <li class="divider"></li>
             <li ng-click="logOut()">
-                <a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                <i class="fa fa-sign-out fa-fw"></i> Logout
             </li>
         </ul>
         <ul ng-hide="authorized()" class="dropdown-menu dropdown-user">
             <li ng-click="register()">
-                <a href="#"><i class="fa fa-sign-out fa-fw"></i> Register</a>
+                <i class="fa fa-sign-out fa-fw"></i> Register
             </li>
             <li class="divider"></li>
             <li ng-click="login()">
-                <a href="#"><i class="fa fa-sign-out fa-fw"></i> Login</a>
+                <i class="fa fa-sign-out fa-fw"></i> Login
             </li>
         </ul>
         <!-- /.dropdown-user -->

@@ -30,8 +30,10 @@ namespace SkiBrain.Web
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
-                Provider = new SimpleAuthorizationServerProvider()
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(15),
+                Provider = new SimpleAuthorizationServerProvider(),
+                RefreshTokenProvider = new SimpleRefreshTokenProvider()
+
             };
 
             // Token Generation

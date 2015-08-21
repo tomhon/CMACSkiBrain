@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using SkiBrain.DataAccess;
+using SkiBrain.DataAccess.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

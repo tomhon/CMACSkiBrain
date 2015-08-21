@@ -89,5 +89,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="SkiBrain.SkiDB.publish.xml" />
+    <None Include="CleanupAuthModels.sql" />
   </ItemGroup>
 </Project>
