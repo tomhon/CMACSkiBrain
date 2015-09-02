@@ -24,6 +24,7 @@
     <NuGetPackageImportStamp>da2f825a</NuGetPackageImportStamp>
     <ApplicationInsightsResourceId>/subscriptions/80831671-319c-4375-97b3-8fb4730b4050/resourcegroups/Default-SQL-WestUS/providers/microsoft.insights/components/skibrain</ApplicationInsightsResourceId>
     <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -879,6 +880,8 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\CMACSkiBrain %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\CMACSkiBrain.pubxml" />
     <None Include="Properties\PublishProfiles\skibrainv2.pubxml" />
   </ItemGroup>
   <ItemGroup />

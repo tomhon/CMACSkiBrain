@@ -11,7 +11,8 @@ using System.Web.Http;
 
 namespace SkiBrain.Web
 {
-    [assembly: OwinStartup(typeof(SkiBrain.Web.Startup))]
+    //[assembly: OwinStartup(typeof(SkiBrain.Web.Startup))]
+    //Commented out to try to work around build issue - unclear if this breaks anything since there are no references
     public class Startup
     {
         public void Configuration(IAppBuilder app)
